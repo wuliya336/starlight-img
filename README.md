@@ -38,7 +38,7 @@ pnpm install --filter=starlight-img
 
 ## 使用帮助
 对机器人发送`#星点图片帮助`
-！[星点图片帮助](./resources/help.jpg)
+![星点图片帮助](./resources/help.jpg)
 
 # 资源
 
