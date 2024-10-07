@@ -10,7 +10,7 @@ export class sendImg extends plugin {
       priority: -20,
       rule: [
         {
-          reg: /(#)?随机(图片)?(.*?)(\d*)$/i,
+          reg: /#?随机(?:图片)?(.*?)(\d*)$/i,
           fnc: 'sendimg',
         }
       ],
@@ -22,10 +22,11 @@ export class sendImg extends plugin {
       return false;
     }
 
-    const match = e.msg.match(/(#)?随机(?:图片)?(.*?)(\d*)$/i);
-    const name = match[1] ? match[1].trim() : '';
+    const match = e.msg.match(/#?随机(?:图片)?(.*?)(\d*)$/i);
+    const name = match[1] ? match[1].trim() : ''; 
     const count = match[2] ? parseInt(match[2]) : 1;
 
+    // 获取随机图片
     const result = await getRandomImages(name, count);
     if (result.code === 200) {
       const images = result.images;
