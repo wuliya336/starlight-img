@@ -26,7 +26,6 @@ export class sendImg extends plugin {
     const name = match[1] ? match[1].trim() : ''; 
     const count = match[2] ? parseInt(match[2]) : 1;
 
-    // 获取随机图片
     const result = await getRandomImages(name, count);
     if (result.code === 200) {
       const images = result.images;
