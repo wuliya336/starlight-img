@@ -1,0 +1,25 @@
+{{extend defaultLayout}}
+{{block 'css'}}
+<link rel="stylesheet" type="text/css" href="{{_res_path}}/imglist/index.css"/>
+{{/block}}
+{{block 'main'}}
+
+<div class="info_box">
+  <div class="head-box type{{bgType}}">
+    <div class="title">星点图片列表</div> 
+  </div>
+</div>
+
+<div class="img-box">
+  <div class="img-table">
+    <div class="tr">
+      {{each imgList imgItem imgKey}}
+      <div class="td">
+        <strong class="img-title">随机{{imgItem}}</strong>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</div>
+
+{{/block}}

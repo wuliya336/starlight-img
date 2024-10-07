@@ -1,0 +1,8 @@
+# 随机图片
+img: true
+
+# 戳一戳图片
+poke: true
+
+# 图片渲染精度
+renderScale: 100
