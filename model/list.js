@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export async function getImageList() {
   try {
-    const response = await axios.get('https://img.wuliya.icu/api/list', { timeout: 10000 });
+    const response = await axios.get('https://img.wuliya.icu/api/list', { timeout: 20000 });
 
     if (response.data && response.data.data) {
       return response.data.data; 
