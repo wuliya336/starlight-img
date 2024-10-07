@@ -1,7 +1,7 @@
 # <center>starlight-img</center>
 
 ![星点图片](https://count.wuliya.cn/?name=starlight-img)<br>
-[![Gitlab](https://img.shields.io/badge/Gitlab-星点图片-black?style=flat-square&logo=gitlab)](https://github.com/wuliya336/starlight-img )[![Github](https://img.shields.io/badge/Github-星点图片-black?style=flat-square&logo=github)](https://github.com/wuliya336/starlight-img)[![Gitee](https://img.shields.io/badge/Gitee-星点图片-black?style=flat-square&logo=gitee)](https://github.com/wuliya336/starlight-img )[![云崽bot](https://img.shields.io/badge/云崽-v3.0.0-black?style=flat-square&logo=dependabot)](https://gitee.com/Le-niao/Yunzai-Bot)<br>
+[![Github](https://img.shields.io/badge/Github-星点图片-black?style=flat-square&logo=github)](https://github.com/wuliya336/starlight-img)[![Gitee](https://img.shields.io/badge/Gitee-星点图片-black?style=flat-square&logo=gitee)](https://github.com/wuliya336/starlight-img )[![云崽bot](https://img.shields.io/badge/云崽-v3.0.0-black?style=flat-square&logo=dependabot)](https://gitee.com/Le-niao/Yunzai-Bot)<br>
 starlight-img`是一个`Yunzai-Bot`的扩展插件，提供随机图片方案功能<br>
 
 ---
