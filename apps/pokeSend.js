@@ -1,4 +1,4 @@
-import { Config } from '../components/index.js'; 
+import { Config } from '../components/index.js';
 import { getRandomImages } from '../model/index.js';
 
 export class pokeSend extends plugin {
@@ -6,11 +6,11 @@ export class pokeSend extends plugin {
     super({
       name: '星点图片:戳一戳图片',
       dsc: '戳一戳发送图片',
-      event: 'notice.group.poke', 
+      event: 'notice.group.poke',
       priority: -20,
       rule: [
         {
-          fnc: 'pokeSend' 
+          fnc: 'pokeSend'
         }
       ]
     });
@@ -19,14 +19,16 @@ export class pokeSend extends plugin {
     if (!Config.poke) {
       return false;
     }
+    if (e.target_id == e.self_id) {
 
-    const { code, images } = await getRandomImages();
+      const { code, images } = await getRandomImages();
 
-    if (code === 200 && images.length > 0) {
-      const imageUrl = images[0].imgurl; 
-      await e.reply(segment.image(imageUrl)); 
+      if (code === 200 && images.length > 0) {
+        const imageUrl = images[0].imgurl;
+        await e.reply(segment.image(imageUrl));
+      }
+
+      return true;
     }
-
-    return true; 
   }
 }

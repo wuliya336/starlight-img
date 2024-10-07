@@ -20,9 +20,9 @@ export class imglist extends plugin {
     try {
       const imageList = await getImageList();
       const imgList = imageList.map(image => image.name);
-      
+
       await Common.render('imglist/index', {
-        imgList 
+        imgList
       }, { e, scale: 1.4 });
     } catch (error) {
       console.error('Error fetching image list:', error);

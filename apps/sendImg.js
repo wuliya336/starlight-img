@@ -10,7 +10,7 @@ export class sendImg extends plugin {
       priority: -20,
       rule: [
         {
-          reg: /(#)?随机(图片)?(.*?)(\d*)$/i, 
+          reg: /(#)?随机(图片)?(.*?)(\d*)$/i,
           fnc: 'sendimg',
         }
       ],
@@ -22,9 +22,9 @@ export class sendImg extends plugin {
       return false;
     }
 
-    const match = e.msg.match(/#随机(?:图片)?(.*?)(\d*)$/i); 
-    const name = match[1] ? match[1].trim() : ''; 
-    const count = match[2] ? parseInt(match[2]) : 1; 
+    const match = e.msg.match(/#随机(?:图片)?(.*?)(\d*)$/i);
+    const name = match[1] ? match[1].trim() : '';
+    const count = match[2] ? parseInt(match[2]) : 1;
 
     const result = await getRandomImages(name, count);
     if (result.code === 200) {
@@ -32,11 +32,11 @@ export class sendImg extends plugin {
 
       if (count === 1) {
         const img = images[0].imgurl;
-        await e.reply(segment.image(img)); 
+        await e.reply(segment.image(img));
       } else {
         const forwardMsg = await Promise.all(
           images.map(async (img) => {
-            return segment.image(img.imgurl); 
+            return segment.image(img.imgurl);
           })
         );
 
