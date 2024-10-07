@@ -22,7 +22,7 @@ export class sendImg extends plugin {
       return false;
     }
 
-    const match = e.msg.match(/#随机(?:图片)?(.*?)(\d*)$/i);
+    const match = e.msg.match(/(#)?随机(?:图片)?(.*?)(\d*)$/i);
     const name = match[1] ? match[1].trim() : '';
     const count = match[2] ? parseInt(match[2]) : 1;
 
