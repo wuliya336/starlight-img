@@ -58,7 +58,7 @@ export class update extends plugin {
     return up.update();
   }
 
-  async swndLog(e = this.e) {
+  async sendLog(e = this.e) {
     if (!this.e.isMaster) return false
     const up = await this.initUpdate(e, Plugin_Name, remoteUrl);
     up.e = e;
