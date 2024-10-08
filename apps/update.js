@@ -49,6 +49,7 @@ export class update extends plugin {
   }
 
   async update(e = this.e) {
+    if (!this.e.isMaster) return false
     e.msg = `#${e.msg.includes("强制") ? "强制" : ""}更新starlight-img`;
 
     const up = await this.initUpdate(e, Plugin_Name, remoteUrl);
@@ -58,6 +59,7 @@ export class update extends plugin {
   }
 
   async swndLog(e = this.e) {
+    if (!this.e.isMaster) return false
     const up = await this.initUpdate(e, Plugin_Name, remoteUrl);
     up.e = e;
 
