@@ -27,7 +27,10 @@ export class update extends plugin {
 
 
     updateInstance.getRemoteUrl = () => {
-      console.log(`getRemoteUrl called, returning custom URL: ${customRemoteUrl}`);
+      return customRemoteUrl; 
+    };
+
+    updateInstance.gitErrUrl = () => {
       return customRemoteUrl; 
     };
 
