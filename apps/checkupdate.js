@@ -93,16 +93,19 @@ export class MonitorTask extends plugin {
                 
                 let MasterNum = list.length;
                 for (let i = 0; i < MasterNum; i++) {
-                    if ((list[i].toString()).length <= 11) {
-                        logger.info(logger.magenta(`Master:${list[i]}`));
-                        try {
-                            await Bot.pickFriend(Number(list[i])).sendMsg(ForMsg);
-                            break;
-                        } catch (err) {
-                            logger.info(`QQ号${list[i]}推送失败，向下推送`);
-                        }
+                    const userId = Number(list[i]);
+                    if (isNaN(userId) || userId.toString().length > 11) {
+                        continue; 
+                    }
+                
+                    try {
+                        logger.info(`Master: ${userId}`);
+                        await Bot.pickFriend(userId).sendMsg(ForMsg);
+                    } catch (err) {
+                        logger.info(`QQ号${list[i]}推送失败，已往下走~`)
                     }
                 }
+                
             }
         } catch (error) {
             return true;
