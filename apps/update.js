@@ -1,7 +1,7 @@
 import { update as Update } from "../../other/update.js";
 import { Plugin_Name } from "../components/index.js"; 
 
-const remoteUrl = "https://github.com/wuliya336/starlight-img";
+const customRemoteUrl = "https://github.com/wuliya336/starlight-img";
 
 export class update extends plugin {
   constructor() {
@@ -21,59 +21,65 @@ export class update extends plugin {
       ]
     });
   }
-
-  async initUpdate(e, Plugin_Name, remoteUrl) {
-    const updateInstance = new Update(e);
+  
+  async initUpdate(e, Plugin_Name, customRemoteUrl) {
+    const updateInstance = new Update(e);  
 
     return new Proxy(updateInstance, {
       get(target, prop) {
-        if (prop === "getGitErrUrl") {
-          return () => {
-            return remoteUrl;
-          };
-        }
-
         if (prop === "getRemoteUrl") {
           return () => {
-            return remoteUrl;
+            console.log(`getRemoteUrl called, returning custom URL: ${customRemoteUrl}`);
+            return customRemoteUrl;
           };
         }
 
         if (prop === "getLog") {
-          return target[prop];
+          return async (...args) => {
+            console.log(`Proxy intercepted getLog for plugin: ${Plugin_Name}`);
+
+            const log = await target.getLog(...args);
+            if (log && log.data) {
+              log.data = log.data.map(node => ({
+                ...node,
+                nickname: "星点图片",  
+                user_id: Bot.uin,     
+              }));
+            }
+
+            return log; 
+          };
         }
 
-        return target[prop];
+        return target[prop];  
       }
     });
   }
 
   async update(e = this.e) {
-    if (!this.e.isMaster) return false
-    e.msg = `#${e.msg.includes("强制") ? "强制" : ""}更新starlight-img`;
+    if (!this.e.isMaster) return false; 
+    e.msg = `#${e.msg.includes("强制") ? "强制" : ""}更新starlight-img`; 
 
-    const up = await this.initUpdate(e, Plugin_Name, remoteUrl);
-    up.e = e;
+    const up = await this.initUpdate(e, Plugin_Name, customRemoteUrl); 
+    up.e = e; 
 
     return up.update();
   }
 
   async sendLog(e = this.e) {
-    if (!this.e.isMaster) return false
-    const up = await this.initUpdate(e, Plugin_Name, remoteUrl);
-    up.e = e;
+    if (!this.e.isMaster) return false;  
 
+    const up = await this.initUpdate(e, Plugin_Name, customRemoteUrl);  
+    up.e = e; 
 
-    const logMsg = await up.getLog(Plugin_Name);
+    const logMsg = await up.getLog(Plugin_Name);  
 
     if (!logMsg || !logMsg.data) {
       return false;
     }
 
     const updatedNodes = logMsg.data.map(node => ({
-      ...node, 
-      nickname: "星点图片", 
-      user_id: Bot.uin,   
+      ...node,
       message: node.message 
     }));
 
