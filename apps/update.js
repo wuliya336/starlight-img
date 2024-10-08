@@ -21,58 +21,52 @@ export class update extends plugin {
       ]
     });
   }
-/* 覆写getRemoteUrl、gitErrUrl、getLog函数 */
+
+ /* 覆写getRemoteUrl、gitErrUrl、getLog函数 */
   async initUpdate(e, Plugin_Name, RepoUrl) {
-    const updateInstance = new Update(e);  
+    const update_fun = new Update(e);
 
+    Object.assign(update_fun, {
+      getRemoteUrl: () => RepoUrl,  
+      gitErrUrl: () => RepoUrl,   
 
-    updateInstance.getRemoteUrl = () => {
-      return RepoUrl; 
-    };
+      getLog: async (...args) => {
+        console.log(`getLog called for plugin: ${Plugin_Name}`);
+        const log = await Update.prototype.getLog.apply(update_fun, args);
 
-    updateInstance.gitErrUrl = () => {
-      return RepoUrl; 
-    };
+        if (log && log.data) {
+          log.data = log.data.map(node => ({
+            ...node,
+            nickname: "星点图片",  
+            user_id: Bot.uin,  
+          }));
+        }
 
-
-    updateInstance.getLog = async (...args) => {
-      console.log(`getLog called for plugin: ${Plugin_Name}`);
-
-
-      const log = await Update.prototype.getLog.apply(updateInstance, args);
-
-      if (log && log.data) {
-        log.data = log.data.map(node => ({
-          ...node,
-          nickname: "星点图片",
-          user_id: Bot.uin,    
-        }));
+        return log;
       }
+    });
 
-      return log;
-    };
-
-    return updateInstance;
+    return update_fun;
   }
 
-  async update(e = this.e) {
-    if (!this.e.isMaster) return false;  
-    e.msg = `#${e.msg.includes("强制") ? "强制" : ""}更新starlight-img`; 
 
-    const up = await this.initUpdate(e, Plugin_Name, RepoUrl)
-    up.e = e; 
+  async update(e = this.e) {
+    if (!this.e.isMaster) return false;
+    e.msg = `#${e.msg.includes("强制") ? "强制" : ""}更新starlight-img`;
+
+    const up = await this.initUpdate(e, Plugin_Name, RepoUrl);
+    up.e = e;
 
     return up.update(); 
   }
 
-
   async sendLog(e = this.e) {
     if (!this.e.isMaster) return false;
 
-    const up = await this.initUpdate(e, Plugin_Name, RepoUrl);  
-    up.e = e; 
+    const up = await this.initUpdate(e, Plugin_Name, RepoUrl);
+    up.e = e;
 
-    const logMsg = await up.getLog(Plugin_Name);  
+    const logMsg = await up.getLog(Plugin_Name);
 
     if (!logMsg || !logMsg.data) {
       return false;
@@ -80,7 +74,7 @@ export class update extends plugin {
 
     const updatedNodes = logMsg.data.map(node => ({
       ...node,
-      message: node.message 
+      message: node.message
     }));
     return e.reply(await Bot.makeForwardMsg(updatedNodes));
   }
