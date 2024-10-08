@@ -1,7 +1,7 @@
 import { update as Update } from "../../other/update.js";
 import { Plugin_Name } from "../components/index.js"; 
 
-const customRemoteUrl = "https://github.com/wuliya336/starlight-img";
+const RepoUrl = "https://github.com/wuliya336/starlight-img";
 
 export class update extends plugin {
   constructor() {
@@ -21,17 +21,17 @@ export class update extends plugin {
       ]
     });
   }
-
-  async initUpdate(e, Plugin_Name, customRemoteUrl) {
+/* 覆写getRemoteUrl、gitErrUrl、getLog函数 */
+  async initUpdate(e, Plugin_Name, RepoUrl) {
     const updateInstance = new Update(e);  
 
 
     updateInstance.getRemoteUrl = () => {
-      return customRemoteUrl; 
+      return RepoUrl; 
     };
 
     updateInstance.gitErrUrl = () => {
-      return customRemoteUrl; 
+      return RepoUrl; 
     };
 
 
@@ -59,7 +59,7 @@ export class update extends plugin {
     if (!this.e.isMaster) return false;  
     e.msg = `#${e.msg.includes("强制") ? "强制" : ""}更新starlight-img`; 
 
-    const up = await this.initUpdate(e, Plugin_Name, customRemoteUrl)
+    const up = await this.initUpdate(e, Plugin_Name, RepoUrl)
     up.e = e; 
 
     return up.update(); 
@@ -69,7 +69,7 @@ export class update extends plugin {
   async sendLog(e = this.e) {
     if (!this.e.isMaster) return false;
 
-    const up = await this.initUpdate(e, Plugin_Name, customRemoteUrl);  
+    const up = await this.initUpdate(e, Plugin_Name, RepoUrl);  
     up.e = e; 
 
     const logMsg = await up.getLog(Plugin_Name);  
