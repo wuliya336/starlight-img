@@ -13,9 +13,8 @@ export class MonitorTask extends plugin {
     constructor() {
         super({
             name: '星点图片:监控github仓库状态',
-            dsc: '监控github仓库状态',
             event: 'message',
-            priority: 1,
+            priority: -20,
             rule: [
                 {
                     reg: /^#?(星点图片)?检测(仓库|github|(星点图片|starlight-img))更新$/i,
@@ -44,7 +43,6 @@ export class MonitorTask extends plugin {
         let OpenStatus = JSON.parse(await redis.get(`starlight-img:FunctionOFF`));
         if (OpenStatus.GitHubPush !== 1) return true
         if (await redis.get(`starlight-img:Github:PushStatus`)) {
-            // logger.info(logger.magenta("已存在推送进程"))
             return true
         } else {
             await redis.set(`starlight-img:Github:PushStatus`, JSON.stringify({PushStatus: 1}));
@@ -65,9 +63,9 @@ export class MonitorTask extends plugin {
                 logger.info(logger.magenta('>>>已更新GithubStatic.json'))
                 let UTC_Date = Json.commit.committer.date
                 const cnTime = new Date(UTC_Date).toLocaleString('zh-CN', {timeZone: 'Asia/Shanghai', hour12: false})
-                let MsgList = [`[星点图片更新自动推送]\nContributors：${Json.commit.committer.name}\nDate:${cnTime}\nMessage:${Json.commit.message}\nUrl:${Json.html_url}`]
+                let MsgList = [`[星点图片]更新自动推送\nContributors：${Json.commit.committer.name}\nDate:${cnTime}\nMessage:${Json.commit.message}\nUrl:${Json.html_url}`]
                 let acgList = []
-                    let bot = {nickname: "星点图片:更新", user_id: Bot.uin}
+                    let bot = {nickname: "星点图片", user_id: Bot.uin}
                     acgList.push(
                         {
                             message: MsgList,
@@ -100,7 +98,7 @@ export class MonitorTask extends plugin {
                             await Bot.pickFriend(Number(list[i])).sendMsg(ForMsg)
                             break // 推送成功后跳出循环
                         } catch (err) {
-                            logger.info(`QQ号${list[i]}推送失败，已往下走~`)
+                            logger.info(`QQ号${list[i]}推送失败，向下推送`)
                         }
                     }
                 }
