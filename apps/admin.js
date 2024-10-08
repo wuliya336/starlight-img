@@ -29,7 +29,6 @@ export class setting extends plugin {
         }
 
         if (regRet[1]) {
-            // 设置模式
             let val = regRet[2] || ''
 
             if (regRet[1] == '全部') {
@@ -58,7 +57,6 @@ export class setting extends plugin {
         let cfg = Config.getCfg()
         cfg.setAll = (await redis.get('Yz:starlight-img:setAll')) == 1
 
-        // 渲染图像
         return await Common.render('admin/index', {
             schema,
             cfg,
