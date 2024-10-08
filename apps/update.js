@@ -78,6 +78,5 @@ export class update extends plugin {
     }));
 
     return e.reply(await Bot.makeForwardMsg(updatedNodes));
-
   }
 }
