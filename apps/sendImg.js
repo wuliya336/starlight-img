@@ -41,12 +41,10 @@ export class sendImg extends plugin {
         await e.reply(imageSegments[0]);
       } else {
         const title = name ? `随机${name}` : `随机图片`;
-
         await e.reply(common.makeForwardMsg(e, imageSegments, title));
       }
     } else {
-      const title = name ? `随机${name}` : `随机图片`;
-      e.reply(`${title} 请求失败`);
+      e.reply('获取失败');
     }
   }
 }

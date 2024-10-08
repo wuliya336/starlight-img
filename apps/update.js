@@ -1,40 +1,42 @@
-let Update
-const PLUGIN_NAME = "starlight-img"
-try {
-  Update = (await import("../../other/update.js")).update
-} catch {
-  logger.warn("[starlight-img] 导入本体更新模块失败，将无法使用更新命令")
-}
+import { update } from "../../other/update.js";
 
-
-
-export class XDUpdate extends plugin {
+export class update extends plugin {
   constructor() {
     super({
-      name: '星点图片:更新',
-      event: 'message',
+      name: "星点图片:更新",
+      event: "message",
       priority: -20,
       rule: [
         {
-          reg: '^#*(starlight-img|星点图片)(插件)?(强制)?更新$',
-          fnc: 'update',
-          permission: 'master'
+          reg: /(#)?(星点图片|starlight)(插件)?(强制)?更新$/i,
+          fnc: "update"
         }
       ]
-    })
-  }
-  async update(e = this.e) {
-    const Type = e.msg.includes("强制") ? "#强制更新" : "#更新"
-    e.msg = Type + PLUGIN_NAME
-    const up = new Update(e)
-    up.e = e
-    return up.update()
+    });
   }
 
-  async updateLog(e = this.e) {
-    e.msg = "#更新日志" + PLUGIN_NAME
-    const up = new Update(e)
-    up.e = e
-    return up.updateLog()
+  async UpdateUrl(e, remoteUrl) {
+    const updateInstance = new update(e);
+    return new Proxy(updateInstance, {
+      get(target, prop) {
+        if (prop === "getRemoteUrl") {
+          return async function(branch, hide, ...args) {
+            return remoteUrl || target.getRemoteUrl(branch, hide, ...args);
+          };
+        }
+        return target[prop];
+      }
+    });
+  }
+
+  async update(e = this.e) {
+    const remoteUrl = "https://github.com/wuliya336/starlight-img.git";
+
+    e.msg = `#${e.msg.includes("强制") ? "强制" : ""}更新starlight-img`;
+
+    const up = await this.UpdateUrl(e, remoteUrl);
+    up.e = e;
+
+    return up.update();  
   }
 }
