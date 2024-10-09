@@ -30,22 +30,40 @@ export class sendImg extends plugin {
     if (result.code === 200) {
       const images = result.images;
 
-      const imageSegments = await Promise.all(
-        images.map(async (img) => {
-          return segment.image(img.imgurl);
-        })
-      );
+      if (count === 1) {
+        await e.reply({ type: 'image', file: images[0].imgurl });
+      } else {
+        const title = name ? `随机${name}` : `随机图片`;
 
-      const title = name ? `随机${name}` : `随机图片`;
+        const titleNode = {
+          message: [
+            {
+              type: 'text',
+              text: title,
+            }
+          ],
+          nickname: '星点图片',
+          user_id: Bot.uin,
+        };
 
-      imageSegments.unshift(segment.text(title));
+        const imageNode = images.map((img) => ({
+          message: [
+            {
+              type: 'image',
+              file: img.imgurl,
+            }
+          ],
+          nickname: '星点图片',
+          user_id: Bot.uin,
+        }));
 
-      const forwardMsg = await Bot.makeForwardMsg(imageSegments, {
-        nickname: "星点图片",
-        user_id: Bot.uin
-      });
+        const forwardNodes = [titleNode, ...imageNode];
+        const forwardMsg = await Bot.makeForwardMsg(forwardNodes);
 
-      await e.reply(forwardMsg);
+        if (forwardMsg) {
+          await e.reply(forwardMsg);
+        }
+      }
     } else {
       e.reply('获取失败');
     }
