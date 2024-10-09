@@ -13,13 +13,17 @@
 
 <div class="img-box">
   <div class="img-table">
-    <div class="tr">
-      {{each imgList imgItem imgKey}}
-      <div class="td">
-        <strong class="img-title">随机{{imgItem.name}}</strong>
-        <strong class="img-num">{{imgItem.num}}</strong> 
-      {{/each}}
-    </div>
+    {{each imginfo imgItem imgKey}}
+      {{if imgKey % 3 === 0}}
+      <div class="tr"> 
+      {{/if}}
+        <div class="td">
+          <strong class="img-title">随机{{imgItem.name}}</strong>
+        </div>
+      {{if imgKey % 3 === 2 || imgKey === imginfo.length - 1}}
+      </div> 
+      {{/if}}
+    {{/each}}
   </div>
 </div>
 

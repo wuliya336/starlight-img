@@ -1,0 +1,23 @@
+{{extend defaultLayout}}
+{{block 'css'}}
+<link rel="stylesheet" type="text/css" href="{{_res_path}}/img/num.css"/>
+{{/block}}
+
+{{block 'main'}}
+
+<div class="container">
+  <div class="title">星点图片随机{{imginfo.name}}图片数量</div>
+  
+  <div class="img-box">  
+    <div class="img-info">
+      <div class="info-title">图片名称：</div>
+      <div class="info-content">{{imginfo.name}}</div> 
+    </div>
+    <div class="img-info">
+      <div class="info-title">图片数量：</div>
+      <div class="info-content">{{imginfo.num}}</div> 
+    </div>
+  </div>
+</div>
+
+{{/block}}

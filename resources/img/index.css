@@ -6,7 +6,7 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: url('./imgs/bg.png') no-repeat center center fixed; 
+  background: url('./imgs/bg-01.png') no-repeat center center fixed; 
   background-size: cover; 
 }
 
@@ -33,22 +33,22 @@ body {
 
 .img-box {
   width: 100%;
-  max-width: 800px;
+  max-width: 800px; 
   padding: 20px;
   background: rgba(255, 255, 255, 0.15); 
-  backdrop-filter: blur(10px); 
-  -webkit-backdrop-filter: blur(10px); 
+  backdrop-filter: blur(5px); 
+  -webkit-backdrop-filter: blur(5px); 
   border-radius: 15px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   text-align: center; 
-  margin-top: 20px;
+  margin-top: 0px;
 }
 
 .img-table {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: wrap; 
   justify-content: center;
-  gap: 20px; 
+  gap: 5px; 
 }
 
 .tr {
@@ -66,17 +66,10 @@ body {
   font-size: 18px;
   font-weight: bold;
   text-align: center;
-  min-width: 150px;
+  min-width: 150px; 
+  margin: 5px; 
 }
 
 .img-title {
   color: rgb(071, 085, 142); 
-}
-
-.img-num {
-  color: rgb(105, 130, 185); 
-  font-size: 16px;
-  display: block;
-  text-align: center; 
-  margin-top: 5px;
 }

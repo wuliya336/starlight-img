@@ -51,6 +51,11 @@ class Config {
   get img() {
     return this.getDefOrConfig('config').img
   }
+
+/*   仓库更新检测推送 */
+  get GithubPush() {
+    return this.getDefOrConfig('config').GithubPush
+  }
   /** 渲染精度 */
   get poke() {
     return this.getDefOrConfig('config').poke
