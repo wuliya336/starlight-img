@@ -1,5 +1,4 @@
 import { getRandomImages } from '../model/index.js';
-import common from '../../../lib/common/common.js';
 import { Config } from '../components/index.js';
 
 export class sendImg extends plugin {
@@ -37,12 +36,16 @@ export class sendImg extends plugin {
         })
       );
 
-      if (count === 1) {
-        await e.reply(imageSegments[0]);
-      } else {
-        const title = name ? `随机${name}` : `随机图片`;
-        await e.reply(common.makeForwardMsg(e, imageSegments, title));
-      }
+      const title = name ? `随机${name}` : `随机图片`;
+
+      imageSegments.unshift(segment.text(title));
+
+      const forwardMsg = await Bot.makeForwardMsg(imageSegments, {
+        nickname: "星点图片",
+        user_id: Bot.uin
+      });
+
+      await e.reply(forwardMsg);
     } else {
       e.reply('获取失败');
     }
