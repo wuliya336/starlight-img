@@ -12,7 +12,7 @@ async function getImageCollection(name = '') {
   if (name) {
     const selectedItem = dataList.find(item => item.name === name || item.alias === name);
     if (!selectedItem) {
-      console.error('获取图片失败');  
+      console.error('获取图片失败');
     }
     return selectedItem || null;
   }
@@ -28,19 +28,20 @@ async function fetchImages(alias, count) {
 
   if (!responses.some(response => response.status === 'fulfilled' && response.value.data.code === 200)) {
     console.error('获取图片失败');
+    return [];
   }
 
   return responses
     .filter(response => response.status === 'fulfilled' && response.value.data.code === 200)
-    .flatMap(response => response.value.data.images);
+    .flatMap(response => response.value.data.data);
 }
 
 export async function getRandomImages(name = '', count = 1) {
   const selectedItem = await getImageCollection(name);
 
   if (!selectedItem) {
-    console.error('获取图片失败');  
-    return { code: 400 }; 
+    console.error('获取图片失败');
+    return { code: 400 };
   }
 
   const images = await fetchImages(selectedItem.alias, count);
@@ -48,7 +49,7 @@ export async function getRandomImages(name = '', count = 1) {
   if (images.length > 0) {
     return { code: 200, images };
   } else {
-    console.error('获取图片失败'); 
+    console.error('获取图片失败');
     return { code: 400 };
   }
 }
