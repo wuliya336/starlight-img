@@ -32,6 +32,14 @@ export const helpList = [{
     icon: 71,
     title: '{#}星点图片列表',
     desc: '获取图片列表'
+  }, {
+    icon: 71,
+    title: '{#}星点图片排行榜',
+    desc: '获取图片数量排行榜'
+  }, {
+    icon: 71,
+    title: '{#}星点图片xx数量',
+    desc: '获取指定图片数量'
 }]
 }, {
   group: '管理命令，仅主人可用',

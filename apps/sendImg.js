@@ -65,7 +65,7 @@ export class sendImg extends plugin {
         }
       }
     } else {
-      swaite.reply('获取API数据失败或图片名称${name}不存在');
+      await e.reply('获取API数据失败或图片名称${name}不存在');
     }
   }
 }
