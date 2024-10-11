@@ -21,7 +21,7 @@ async function getImageCollection(name = '') {
 }
 
 async function fetchImages(alias, count) {
-  const apiUrl = `https://img.wuliya.icu/api/${alias}?type=json&num=1`;
+  const apiUrl = `https://img.wuliya336.top/api/${alias}?type=json&num=1`;
 
   const requests = Array.from({ length: count }, () => axios.get(apiUrl, { timeout: 20000 }));
   const responses = await Promise.allSettled(requests);
