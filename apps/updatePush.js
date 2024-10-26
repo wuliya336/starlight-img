@@ -3,6 +3,7 @@ import path from 'path'
 import cfg from '../../../lib/config/config.js'
 import axios from "axios";
 import { Config } from '../components/index.js';
+import { log } from 'console';
 
 let Group = 837947839;
 let cwd = process.cwd().replace(/\\/g, "/");
@@ -25,6 +26,7 @@ export class MonitorTask extends plugin {
             this.task = {
                 name: '星点图片:仓库更新检测',
                 cron: '0 0/5 * * * ? ',
+                log: false,
                 fnc: () => {
                     this.MonitorTask(true);
                 }
