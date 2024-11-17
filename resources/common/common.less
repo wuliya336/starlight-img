@@ -1,13 +1,15 @@
 .font(@name, @file) {
   @font-face {
     font-family: @name;
-    src: url("./font/@{file}.woff") format('woff'), url("./font/@{file}.ttf") format('truetype');
+    src:
+      url("./font/@{file}.woff") format("woff"),
+      url("./font/@{file}.ttf") format("truetype");
   }
 }
 
-.font('Number', 'tttgbnumber');
-.font('NZBZ', 'NZBZ');
-.font('YS', 'HYWH-65W');
+.font("Number", "tttgbnumber");
+.font("NZBZ", "NZBZ");
+.font("YS", "HYWH-65W");
 
 @import "base.less";
 
@@ -22,7 +24,8 @@
 body {
   font-size: 18px;
   color: #1e1f20;
-  font-family: Number, "汉仪文黑-65W", YS, PingFangSC-Medium, "PingFang SC", sans-serif;
+  font-family: Number, "汉仪文黑-65W", YS, PingFangSC-Medium, "PingFang SC",
+    sans-serif;
   transform: scale(1.4);
   transform-origin: 0 0;
   width: 600px;
@@ -34,7 +37,6 @@ body {
   background-size: contain;
 }
 
-
 .head-box {
   border-radius: 15px;
   padding: 10px 20px;
@@ -45,7 +47,9 @@ body {
   .title {
     .font-NZBZ;
     font-size: 36px;
-    text-shadow: 0 0 1px #000, 1px 1px 3px rgba(0, 0, 0, .9);
+    text-shadow:
+      0 0 1px #000,
+      1px 1px 3px rgba(0, 0, 0, 0.9);
 
     .label {
       display: inline-block;
@@ -62,7 +66,9 @@ body {
 
   .label {
     font-size: 16px;
-    text-shadow: 0 0 1px #000, 1px 1px 3px rgba(0, 0, 0, .9);
+    text-shadow:
+      0 0 1px #000,
+      1px 1px 3px rgba(0, 0, 0, 0.9);
 
     span {
       color: #d3bc8e;
@@ -70,7 +76,6 @@ body {
     }
   }
 }
-
 
 .notice {
   color: #888;
@@ -102,7 +107,6 @@ body {
   }
 }
 
-
 /*  */
 
 .cons {
@@ -111,7 +115,6 @@ body {
   padding: 0 5px;
   border-radius: 4px;
 }
-
 
 .cons(@idx, @bg, @color:#fff) {
   .cons-@{idx} {
@@ -151,14 +154,14 @@ body {
   width: 50px;
   height: 50px;
   display: inline-block;
-  background: url('./item/fetter.png');
+  background: url("./item/fetter.png");
   background-size: auto 100%;
   @fetters: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10;
   each(@fetters, {
     &.fetter@{value} {
       background-position: (-100%/9)+(100%/9)*@value 0;
     }
-  })
+  });
 }
 
 /********  ELEM  ********/
@@ -186,15 +189,16 @@ each(@elems, {
   // backdrop-filter: blur(3px);
   margin: 5px 15px 5px 10px;
   position: relative;
-  box-shadow: 0 0 1px 0 #ccc, 2px 2px 4px 0 rgba(50, 50, 50, .8);
+  box-shadow:
+    0 0 1px 0 #ccc,
+    2px 2px 4px 0 rgba(50, 50, 50, 0.8);
   overflow: hidden;
   color: #fff;
   font-size: 16px;
 }
 
-
 .cont-title {
-  background: rgba(0, 0, 0, .4);
+  background: rgba(0, 0, 0, 0.4);
   box-shadow: 0 0 1px 0 #fff;
   color: #d3bc8e;
   padding: 10px 20px;
@@ -209,7 +213,7 @@ each(@elems, {
   }
 
   &.border-less {
-    background: linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, 0));
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
     box-shadow: none;
     padding-bottom: 5px;
   }
@@ -222,7 +226,6 @@ each(@elems, {
   box-shadow: 0 0 1px 0 #fff;
   font-weight: normal;
 }
-
 
 .cont-footer {
   padding: 10px 15px;
@@ -237,7 +240,8 @@ each(@elems, {
   background: rgba(0, 0, 0, 0.5);
 }
 
-ul.cont-msg, .cont-footer ul {
+ul.cont-msg,
+.cont-footer ul {
   padding-left: 15px;
 
   li {
@@ -262,11 +266,11 @@ ul.cont-msg, .cont-footer ul {
 }
 
 .cont-table .tr:nth-child(even) {
-  background: rgba(0, 0, 0, .4);
+  background: rgba(0, 0, 0, 0.4);
 }
 
 .cont-table .tr:nth-child(odd) {
-  background: rgba(50, 50, 50, .4);
+  background: rgba(50, 50, 50, 0.4);
 }
 
 .cont-table .tr > div,
@@ -291,18 +295,17 @@ ul.cont-msg, .cont-footer ul {
 .cont-table .thead > div,
 .cont-table .thead > td {
   color: #d3bc8e;
-  background: rgba(0, 0, 0, .4);
+  background: rgba(0, 0, 0, 0.4);
   line-height: 40px;
   height: 40px;
 }
-
 
 .cont-table .title,
 .cont-table .th {
   color: #d3bc8e;
   padding-right: 15px;
   text-align: right;
-  background: rgba(0, 0, 0, .4);
+  background: rgba(0, 0, 0, 0.4);
   min-width: 100px;
   vertical-align: middle;
 }
@@ -347,7 +350,7 @@ ul.cont-msg, .cont-footer ul {
     &.opacity-bg.star@{value} {
       background-image: url("../common/item/bg@{value}-o.png");
     }
-  })
+  });
 }
 
 .item-list {
