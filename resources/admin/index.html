@@ -1,8 +1,6 @@
-{{extend defaultLayout}}
-{{block 'css'}}
-<link rel="stylesheet" type="text/css" href="{{_res_path}}/admin/index.css"/>
-{{/block}}
-{{block 'main'}}
+{{extend defaultLayout}} {{block 'css'}}
+<link rel="stylesheet" type="text/css" href="{{_res_path}}/admin/index.css" />
+{{/block}} {{block 'main'}}
 
 <div class="info_box">
   <div class="head-box type{{bgType}}">
@@ -18,18 +16,17 @@
     <li class="cfg-li">
       <div class="cfg-line">
         {{cfgItem.title}}
-        <span class="cfg-hint"> #星点图片设置{{cfgItem.key}}
-          {{if cfgItem.type==='num'}} {{cfgItem.def}}{{else}} 开启/关闭{{/if}}
+        <span class="cfg-hint">
+          #星点图片设置{{cfgItem.key}} {{if cfgItem.type==='num'}}
+          {{cfgItem.def}}{{else}} 开启/关闭{{/if}}
         </span>
         {{if cfgItem.type === 'num'}}
         <div class="cfg-status">{{cfg[cfgKey]}}</div>
-        {{else}}
-        {{if cfg[cfgKey]}}
+        {{else}} {{if cfg[cfgKey]}}
         <div class="cfg-status">已开启</div>
         {{else}}
         <div class="cfg-status status-off">已关闭</div>
-        {{/if}}
-        {{/if}}
+        {{/if}} {{/if}}
       </div>
       {{if cfgItem.desc && cfgItem.showDesc!== false}}
       <div class="cfg-desc">{{cfgItem.desc}}</div>
@@ -38,5 +35,4 @@
     {{/each}}
   </ul>
 </div>
-{{/each}}
-{{/block}}
+{{/each}} {{/block}}
