@@ -1,0 +1,35 @@
+name: 格式化代码
+
+on:
+  push:
+    branches:
+      - dev
+  pull_request_target:
+    branches:
+      - dev
+
+permissions:
+  contents: write
+
+jobs:
+  prettier:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          ref: dev
+
+      - name: 确保在指定分支上
+        run: |
+          git fetch origin dev
+          git checkout dev
+          git reset --hard origin/dev # 确保与远程同步
+
+      - name: 使用 Prettier 格式化代码
+        uses: creyD/prettier_action@v4.3
+        with:
+          prettier_version: "latest"
+          prettier_options: "--write ."
+          commit_message: "✨ GitHub Action: 格式化代码"

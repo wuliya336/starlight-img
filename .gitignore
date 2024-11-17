@@ -6,4 +6,4 @@ pnpm-lock.yaml
 .history
 
 config/config
-resources/Github
+resources/Github/*.json

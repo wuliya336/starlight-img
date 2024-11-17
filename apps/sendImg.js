@@ -1,17 +1,17 @@
-import { getRandomImages } from '../model/index.js';
-import { Config } from '../components/index.js';
+import { getRandomImages } from "../model/index.js";
+import { Config } from "../components/index.js";
 
 export class sendImg extends plugin {
   constructor() {
     super({
-      name: '星点图片:随机图片',
-      event: 'message',
+      name: "星点图片:随机图片",
+      event: "message",
       priority: -20,
       rule: [
         {
           reg: /#?随机(?:图片)?(.*?)(\d*)$/i,
-          fnc: 'sendimg',
-        }
+          fnc: "sendimg",
+        },
       ],
     });
   }
@@ -22,7 +22,7 @@ export class sendImg extends plugin {
     }
 
     const match = e.msg.match(/#?随机(?:图片)?(.*?)(\d*)$/i);
-    const name = match[1] ? match[1].trim() : ''; 
+    const name = match[1] ? match[1].trim() : "";
     const count = match[2] ? parseInt(match[2]) : 1;
 
     const result = await getRandomImages(name, count);
@@ -31,29 +31,29 @@ export class sendImg extends plugin {
       const images = result.images;
 
       if (count === 1) {
-        await e.reply({ type: 'image', file: images[0].imgurl });
+        await e.reply({ type: "image", file: images[0].imgurl });
       } else {
         const title = name ? `随机${name}` : `随机图片`;
 
         const titleNode = {
           message: [
             {
-              type: 'text',
+              type: "text",
               text: title,
-            }
+            },
           ],
-          nickname: '星点图片',
+          nickname: "星点图片",
           user_id: Bot.uin,
         };
 
         const imageNode = images.map((img) => ({
           message: [
             {
-              type: 'image',
+              type: "image",
               file: img.imgurl,
-            }
+            },
           ],
-          nickname: '星点图片',
+          nickname: "星点图片",
           user_id: Bot.uin,
         }));
 
@@ -64,8 +64,6 @@ export class sendImg extends plugin {
           await e.reply(forwardMsg);
         }
       }
-    } else {
-      await e.reply(`获取API数据失败或图片名称${name}不存在`);
     }
   }
 }
