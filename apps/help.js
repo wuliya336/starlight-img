@@ -1,8 +1,6 @@
 import lodash from "lodash";
 import { Common, Data, Version } from "../components/index.js";
-import Theme from "./help/theme.js";
-const _path = process.cwd();
-const helpPath = `${_path}/plugins/starlight-img/resources/help`;
+import Theme from "../config/system/theme_system.js";
 
 export class help extends plugin {
   constructor() {
