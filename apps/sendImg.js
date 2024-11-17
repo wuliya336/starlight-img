@@ -17,7 +17,7 @@ export class sendImg extends plugin {
   }
 
   async sendimg(e) {
-    if (!Config.img) {
+    if (!Config.img.img) {
       return false;
     }
 

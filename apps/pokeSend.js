@@ -16,7 +16,7 @@ export class pokeSend extends plugin {
     });
   }
   async pokeSend(e) {
-    if (!Config.poke) {
+    if (!Config.img.poke) {
       return false;
     }
     if (e.target_id == e.self_id) {
