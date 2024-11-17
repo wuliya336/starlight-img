@@ -1,26 +1,23 @@
-{{extend defaultLayout}}
-{{block 'css'}}
-<link rel="stylesheet" type="text/css" href="{{_res_path}}/img/list.css"/>
-{{/block}}
-
-{{block 'main'}}
+{{extend defaultLayout}} {{block 'css'}}
+<link rel="stylesheet" type="text/css" href="{{_res_path}}/img/list.css" />
+{{/block}} {{block 'main'}}
 
 <div class="info_box">
   <div class="head-box type{{bgType}}">
-    <div class="title">星点图片排行榜</div> 
+    <div class="title">星点图片排行榜</div>
   </div>
 </div>
 
 <div class="img-box">
   <div class="img-list">
     {{each imglist imgItem imgKey}}
-      <div class="img-item-container">
-        <div class="img-rank">{{imgKey + 1}}</div>
-        <div class="img-item">
-          <strong class="img-title">{{imgItem.name}}</strong>
-          <div class="img-num">{{imgItem.num}}</div>
-        </div>
+    <div class="img-item-container">
+      <div class="img-rank">{{imgKey + 1}}</div>
+      <div class="img-item">
+        <strong class="img-title">{{imgItem.name}}</strong>
+        <div class="img-num">{{imgItem.num}}</div>
       </div>
+    </div>
     {{/each}}
   </div>
 </div>

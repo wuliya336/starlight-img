@@ -1,11 +1,10 @@
-{{extend elemLayout}}
-
-{{block 'css'}}
-<link rel="stylesheet" type="text/css" href="{{_res_path}}/help/version-info.css"/>
-{{/block}}
-
-{{block 'main'}}
-{{each changelogs ds idx}}
+{{extend elemLayout}} {{block 'css'}}
+<link
+  rel="stylesheet"
+  type="text/css"
+  href="{{_res_path}}/help/version-info.css"
+/>
+{{/block}} {{block 'main'}} {{each changelogs ds idx}}
 <div class="anemo-bg log-cont">
   <div class="cont">
     {{if idx === 0 }}
@@ -31,5 +30,4 @@
     </div>
   </div>
 </div>
-{{/each}}
-{{/block}}
+{{/each}} {{/block}}
