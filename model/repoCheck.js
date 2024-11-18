@@ -1,8 +1,13 @@
 import axios from "axios";
 import { Data } from "../components/index.js";
 
-async function repoCheck(filePath, pluginPath) {
+async function repoCheck(manual = false) {
+  const dirPath = "resources/Github";
+  const jsonFile = `${dirPath}/GithubStatic.json`;
+
   try {
+    Data.createDir(dirPath);
+
     const res = await axios.get(
       "https://api.github.com/repos/wuliya336/starlight-img/commits",
     );
@@ -17,13 +22,13 @@ async function repoCheck(filePath, pluginPath) {
       committerName.includes("GitHub Action") ||
       committerEmail === "actions@github.com"
     ) {
-      return;
+      return manual ? Data.readJSON(jsonFile) : null;
     }
 
     const commitInfo = {
       author: authorName,
       committer: committerName,
-      avatar: authorAvatar || "{{_res_path}}/repoPush/icons/author.svg", // 设置默认头像路径
+      avatar: authorAvatar || "{{_res_path}}/repoPush/icons/author.svg",
       date: new Date(commit.commit.committer.date).toLocaleString("zh-CN", {
         timeZone: "Asia/Shanghai",
         hour12: false,
@@ -31,9 +36,16 @@ async function repoCheck(filePath, pluginPath) {
       message: commitMessage.split("\n")[0],
     };
 
-    Data.writeJSON(filePath, commitInfo, "\t", pluginPath);
+    const existingData = Data.readJSON("GithubStatic.json", dirPath);
+
+    if (!existingData || existingData.message !== commitInfo.message) {
+      Data.writeJSON(jsonFile, commitInfo, "\t");
+      return commitInfo;
+    }
+
+    return manual ? existingData : null;
   } catch (error) {
-    console.error("获取最新提交出错:", error);
+    logger.error("获取最新提交出错:", error);
   }
 }
 

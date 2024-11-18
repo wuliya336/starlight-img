@@ -1,7 +1,5 @@
-import { Config, Common, Data, Plugin_Path } from "../components/index.js";
-import { repoCheck } from "../model/index.js";
-
-const GithubStatic = `resources/Github/GithubStatic.json`;
+import { Config, Common, Data } from "../components/index.js";
+import repoCheck from "../model/repoCheck.js";
 
 export class MonitorTask extends plugin {
   constructor() {
@@ -11,15 +9,16 @@ export class MonitorTask extends plugin {
       priority: -20,
       rule: [
         {
-          reg: /^#?(星点图片)?检测(仓库|github)更新(推送)?$/i,
+          reg: /^#?(星点图片|starlight-img)?检测(仓库|github)更新(推送)?$/i,
           fnc: "Monitor",
         },
       ],
     });
+
     if (Config.other.GithubPush) {
       this.task = {
-        name: "星点图片:仓库更新检测",
-        cron: "0 0/5 * * * ? ",
+        name: "星点签名:仓库更新检测",
+        cron: "0 0/5 * * * ?",
         log: false,
         fnc: () => {
           this.MonitorTask(true);
@@ -38,34 +37,27 @@ export class MonitorTask extends plugin {
       return true;
     }
 
-    if (await redis.get(`Yz:starlight-img:Github:PushStatus`)) {
+    if (await redis.get(`starlight-qsign:Github:PushStatus`)) {
       return true;
     } else {
       await redis.set(
-        `starlight-img:Github:PushStatus`,
+        `starlight-qsign:Github:PushStatus`,
         JSON.stringify({ PushStatus: 1 }),
       );
-      await redis.expire(`starlight-img:Github:PushStatus`, 60 * 4 - 5);
+      await redis.expire(`starlight-qsign:Github:PushStatus`, 60 * 5 - 5);
     }
 
-    Data.createDir(GithubStatic, Plugin_Path, true);
-    let GithubStaticJson = Data.readJSON(GithubStatic, Plugin_Path);
-
     try {
-      await repoCheck(GithubStatic, Plugin_Path);
+      const commitInfo = await repoCheck(false);
 
-      const updatedData = Data.readJSON(GithubStatic, Plugin_Path);
-
-      if (GithubStaticJson.sha !== updatedData.sha) {
-        logger.info(logger.magenta(">>>已更新GithubStatic.json"));
-
+      if (commitInfo) {
         const image = await Common.render(
           "repoPush/index",
-          { commitInfo: updatedData },
+          { commitInfo },
           { e, scale: 1.4 },
         );
 
-        let firstMasterQQ = Config.masterQQ[0];
+        const firstMasterQQ = Config.masterQQ[0];
         if (!isNaN(firstMasterQQ) && firstMasterQQ.toString().length <= 11) {
           await Bot.pickFriend(firstMasterQQ).sendMsg(image);
         }
@@ -74,27 +66,26 @@ export class MonitorTask extends plugin {
       logger.error("仓库更新检测出错:", error);
       return true;
     }
+
     return true;
   }
 
   async SelectMonitor(e) {
     try {
-      await repoCheck(GithubStatic, Plugin_Path);
-
-      const updatedData = Data.readJSON(GithubStatic, Plugin_Path);
-
-      logger.info(logger.magenta(">>>手动检测星点图片仓库最新代码"));
+      const commitInfo = await repoCheck(true);
 
       const image = await Common.render(
         "repoPush/index",
-        { commitInfo: updatedData },
+        { commitInfo },
         { e, scale: 1.4 },
       );
 
       await e.reply(image);
     } catch (error) {
       logger.error("手动检测出错:", error);
+      await e.reply("检测仓库更新出错,请稍后再试");
     }
+
     return true;
   }
 }
